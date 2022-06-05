@@ -1,4 +1,4 @@
 [workspace]
 members = [
-    "web-client-gecko"
+    "web-client-driver"
 ]
