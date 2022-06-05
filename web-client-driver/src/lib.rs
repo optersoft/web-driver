@@ -15,6 +15,7 @@ pub async fn connect(
 ) -> Result<Client, NewSessionError> {
     match browser {
         Browser::Chrome => {
+            // https://chromedriver.chromium.org/capabilities
             let mut caps = serde_json::map::Map::new();
             let args = if headless {
                 serde_json::json!([
@@ -30,7 +31,7 @@ pub async fn connect(
                 "args": args,
                 "binary":
                     if std::path::Path::new("/usr/bin/chromium-browser").exists() {
-                        // on Ubuntu, it's called chromium-browser
+                        // on Fedora and Ubuntu, it's called chromium-browser
                         "/usr/bin/chromium-browser"
                     } else if std::path::Path::new("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome").exists() {
                         // macOS
@@ -48,6 +49,7 @@ pub async fn connect(
                 .await
         }
         Browser::Firefox => {
+            // https://developer.mozilla.org/en-US/docs/Web/WebDriver/Capabilities/firefoxOptions
             let mut caps = serde_json::map::Map::new();
             let args = if headless {
                 serde_json::json!(["--headless"])
