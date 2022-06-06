@@ -1,6 +1,5 @@
 use fantoccini::error::NewSessionError;
-use fantoccini::Client;
-use fantoccini::{ClientBuilder, Locator};
+use fantoccini::{Client, ClientBuilder};
 
 pub enum Browser {
     Chrome,
@@ -33,9 +32,6 @@ pub async fn connect(
                     if std::path::Path::new("/usr/bin/chromium-browser").exists() {
                         // on Fedora and Ubuntu, it's called chromium-browser
                         "/usr/bin/chromium-browser"
-                    } else if std::path::Path::new("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome").exists() {
-                        // macOS
-                        "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
                     } else {
                         // elsewhere, it's just called chromium
                         "/usr/bin/chromium"
@@ -80,6 +76,7 @@ mod tests {
         let client = super::connect(Browser::Chrome, true, None, None).await?;
 
         client.goto("https://www.google.com/").await?;
+
         Ok(())
     }
 }
